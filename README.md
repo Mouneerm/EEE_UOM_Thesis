@@ -8,9 +8,9 @@ Mauritius has experienced significant economic growth, but it has led to traffic
 
 1 . Slow driving in an attempt to maximise the number of potential passengers.
 
-2. Safety concerns; accidents sometimes happen due to speeding
+2 . Safety concerns; accidents sometimes happen due to speeding
 
-3. Unpredictable waiting times.
+3 . Unpredictable waiting times.
 
 The proposed solution involves an Artificial Intelligence-powered camera system to assess bus speed and safety, coupled with a GPS system using the Internet of Things (IoT) to provide real-time bus location information for passengers.
 
