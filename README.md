@@ -18,5 +18,30 @@ The proposed solution involves an Artificial Intelligence-powered camera system 
 
 To solve the problems mentioned above, the propose system uses a single-board computer (SBC) or microcontroller along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
 
+
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/a2effaf6-d5a6-4f96-8852-f0f88160429c)
+
+
+To sum everything up, RPi4 will be used as the heart of the system combined with a camera and a Neo-6m V2 GPS module. Moreover, an easy and intuitive interface is implemented. Hence, the design contains an I2C display with a rotary encoder for the bus driver to select his respective bus route and also an app for time management.
+
+## Overall implementation:
+
+The following block diagram demonstrates how the overall system works and is 
+interconnected:
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/04373084-a6b6-4068-8e0a-47929abc1534)
+
+
+The schematics are shown below and note that the red wires represent the power rail, the black wires represent ground and the blue wires are for communication or GPIO output. Unfortunately, there is not any options on USB connectivity for the RPi4 in Fritzing and the USB camera connection is not shown.
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/e93df27b-8196-4bea-b331-dfdb0c0aff62)
+
+The overall system flow chart is shown here:
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/d61e5c7e-8fd5-4570-90ac-fd0de8b7b971)
+
+The following should be noted from the flowchart:
+•	USD is the upper bound stopping distance, above which the preceding vehicle is considered too far
+•	LSD is the lower bound stopping distance below which the preceding vehicle is considered too close.
+•	“Distance = None” means that no vehicle is detected in the region of interest.
 
