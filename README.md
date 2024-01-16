@@ -12,17 +12,35 @@ Mauritius has experienced significant economic growth, but it has led to traffic
 
 3 . Unpredictable waiting times.
 
-The proposed solution involves an Artificial Intelligence-powered camera system to assess bus speed and safety, coupled with a GPS system using the Internet of Things (IoT) to provide real-time bus location information for passengers.
+The proposed solution involves an Artificial Intelligence powered camera system to assess bus speed and safety, coupled with a GPS system using the Internet of Things (IoT) to provide real-time bus location information for passengers.
+
+## Methodology
+
+To address the aforementioned issues, the proposed
+system uses a microcontroller-based system equipped with
+sensors to record key bus traveling characteristics in real-time, 
+such as speed, GPS coordinates and live feed of the road. The 
+distance between the bus and the vehicle immediately in front 
+of it is calculated based on these information and its suitability 
+is determined with reference to the appropriate braking 
+distance. The following equation provides the formula to determine the 
+distance, D, between a camera and an object in front of it:
+D = (f . Rh . Ih) / (Oh . Sh) (1)
+where f is the focal length in mm, Rh is the real known height 
+of the object in mm, Ih is the total height of an image in pixels, 
+Oh is the object height in the image in pixels and Sh is the 
+sensor height in mm.
 
 ## System Architecture:
 
-To solve the problems mentioned above, the propose system uses a single-board computer (SBC) or microcontroller along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
+To solve the problems mentioned above, the propose system uses a Raspberry Pi 4 along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
 
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/a2effaf6-d5a6-4f96-8852-f0f88160429c)
 
 
 To sum everything up, RPi4 will be used as the heart of the system combined with a camera and a Neo-6m V2 GPS module. Moreover, an easy and intuitive interface is implemented. Hence, the design contains an I2C display with a rotary encoder for the bus driver to select his respective bus route and also an app for time management.
+
 
 ## Overall implementation:
 
