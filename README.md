@@ -25,7 +25,7 @@ of it is calculated based on these information and its suitability
 is determined with reference to the appropriate braking 
 distance. The following equation provides the formula to determine the 
 distance, D, between a camera and an object in front of it:
-D = (f . Rh . Ih) / (Oh . Sh) (1)
+$$D = (f . Rh . Ih) / (Oh . Sh)$$ 
 where f is the focal length in mm, Rh is the real known height 
 of the object in mm, Ih is the total height of an image in pixels, 
 Oh is the object height in the image in pixels and Sh is the 
