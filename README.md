@@ -4,7 +4,7 @@ Computer Vision algorithm implemented in a Raspberry Pi to monitor the performan
 
 ## Introduction to the problem:
 
-Mauritius has experienced significant economic growth, but it has led to traffic congestion issues. The transport system lags due to an excessive number of vehicles, inefficient public transport, poor road traffic management, population growth, poor roadway conditions, economic development, urbanization, and unforeseen circumstances. Peak hours exacerbate the problem. Encouraging public transport use, especially buses, is a potential solution, but residents avoid buses due to the main following reasons:
+Mauritius has experienced significant economic growth, but it has led to traffic congestion issues.Encouraging public transport use, especially buses, is a potential solution, but residents avoid buses due to the main following reasons:
 
 1 . Slow driving in an attempt to maximise the number of potential passengers.
 
@@ -28,7 +28,7 @@ To sum everything up, RPi4 will be used as the heart of the system combined with
 
 ## Overall implementation:
 
-The following block diagram demonstrates how the overall system works and is 
+The following block diagram demonstrates how the system works and is 
 interconnected:
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/04373084-a6b6-4068-8e0a-47929abc1534)
@@ -45,9 +45,10 @@ The overall system flow chart is shown here:
 
 Key points from the flowchart description:
 
-USD (Upper Stopping Distance) is the upper limit for the stopping distance, indicating that the preceding vehicle is considered too far.
-LSD (Lower Stopping Distance) is the lower limit for the stopping distance, signifying that the preceding vehicle is considered too close.
+USD (Upper Bound Stopping Distance) is the upper limit for the stopping distance, indicating that the preceding vehicle is considered too far.
+LSD (Lower Bound Stopping Distance) is the lower limit for the stopping distance, signifying that the preceding vehicle is considered too close.
 "Distance = None" implies no vehicle is detected in the region of interest.
+
 SSD Algorithm Limitation:
 
 The SSD algorithm can detect traffic signs but cannot read them, potentially leading to misinterpretation of "slow driving" within the speed limit and triggering false "slow" alerts.
@@ -55,6 +56,7 @@ Addressing Slow Driving Issue:
 
 To address the slow driving issue, a "normal" state is added, assuming that if the bus is driving slowly within the speed limit, it will not be overtaken.
 The "Normal" state becomes false when no vehicle is detected or is too far in front, and the algorithm checks for potential overtaking to trigger the "Slow" state.
+
 Differentiation in Braking Distance:
 
 The algorithm is designed to differentiate between whether the preceding vehicle is slowing down or if the bus is being overtaken based on the range of braking distances.
@@ -63,6 +65,7 @@ GPS Module Integration:
 A separate process interfaces with the GPS module and sends data to the cloud because the GPS module updates data at 1 second intervals, while the SSD algorithm operates at around 4 FPS.
 Implementing both in a single loop would limit the FPS to 1, affecting system performance.
 The use of the Python Multiprocessing library creates a separate process, preventing the algorithm from waiting for GPS data and improving overall system performance.
+
 Multiprocessing Benefits:
 
 Multiprocessing does not cause instability in the Global Interpreter Lock, allowing the OS of the RPi4 to utilize another CPU core for the secondary process.
@@ -97,9 +100,30 @@ successfully display the current GPS location of public transports on the chosen
 
 Synchronising via google Firebase API:
 
-![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/de306c68-82c5-4c40-98ce-72f586157ded)
+
 
 ## Results and testing:
 
+Distance and speed estimation in region of interest and the App displaying real-time location of bus obtained via Firebase API:
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/b859d50b-fc47-4cc6-81de-d53bb7fbe3eb)
+
+“Normal” = False state detected when speed is low while there is no vehicle ahead and picture is uploaded in the appropriate Firebase directory
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/2cb200a8-a48c-427a-a3bf-15f967c5af30)
+
+“Slow” state detected when speed is low while vehicle has overtaken and picture is uploaded in the appropriate Firebase directory
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/c8d794b8-a244-4919-a261-e948eaf3460e)
+
+
+## Future works:
+One major issue with the prototype during testing is that it triggers false alarms in curve roads. The following can be done to solve this issue:
+1.	Implement a lane detection algorithm.
+2.	Add a gyroscope sensor
+3.	Manually add GPS coordinates where the algorithm must be paused.
+However, adding another AI algorithm to the program is too much for the RPi4 and manually add GPS coordinates is quite a daunting task. Implementing a gyroscope sensor may be the proper solution as it is computationally cheap, it can detect angular acceleration when turning but must be calibrated well so that it must not be sensitive to vibrations.
+
+Another improvement is to make the project more adaptable so that in can be used in any scenario where driving performance needs to be monitored.
 
 
