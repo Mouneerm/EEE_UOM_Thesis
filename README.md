@@ -14,26 +14,10 @@ Mauritius has experienced significant economic growth, but it has led to traffic
 
 The proposed solution involves an Artificial Intelligence powered camera system to assess bus speed and safety, coupled with a GPS system using the Internet of Things (IoT) to provide real-time bus location information for passengers.
 
-## Methodology
-
-To address the aforementioned issues, the proposed
-system uses a microcontroller-based system equipped with
-sensors to record key bus traveling characteristics in real-time, 
-such as speed, GPS coordinates and live feed of the road. The 
-distance between the bus and the vehicle immediately in front 
-of it is calculated based on these information and its suitability 
-is determined with reference to the appropriate braking 
-distance. The following equation provides the formula to determine the 
-distance, D, between a camera and an object in front of it:
-$$D = (f . Rh . Ih) / (Oh . Sh)$$ 
-where f is the focal length in mm, Rh is the real known height 
-of the object in mm, Ih is the total height of an image in pixels, 
-Oh is the object height in the image in pixels and Sh is the 
-sensor height in mm.
 
 ## System Architecture:
 
-To solve the problems mentioned above, the propose system uses a Raspberry Pi 4 along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
+The propose system uses a Raspberry Pi 4 along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
 
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/a2effaf6-d5a6-4f96-8852-f0f88160429c)
@@ -58,11 +42,64 @@ The overall system flow chart is shown here:
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/d61e5c7e-8fd5-4570-90ac-fd0de8b7b971)
 
-The following should be noted from the flowchart:
-•	USD is the upper bound stopping distance, above which the preceding vehicle is considered too far
-•	LSD is the lower bound stopping distance below which the preceding vehicle is considered too close.
-•	“Distance = None” means that no vehicle is detected in the region of interest.
 
-The SSD algorithm can detect traffic signs but cannot unfortunately read them. Hence the program can misinterpret “slow driving” when driving within the speed limit and trigger false “slow” alert. To solve this issue, a “normal” state is added if the bus is driving slowly because of the speed limit, it is being assumed that it will not be overtaken. On the contrary, if the bus is driving purposely slowly, it will be overtaken sooner or later. The “Normal” state is False when no vehicle is detected or is too far in front of the bus. At this state, the algorithm keeps checking if suddenly the bus is being overtaken and it will trigger the “Slow” state. Moreover, the algorithm is designed to differentiate between whether the preceding vehicle is slowing down or whether the bus is overtaken by different range of braking distance. 
-It can be seen that a separate process interfaces with the GPS module and sending the data to the cloud. This is because the GPS module takes one second to update the data sequence while the SSD algorithm operates at around 4 FPS. If both are implemented in a single loop sequence, the algorithm waits for the GPS to receive data and the FPS would be limited to 1 FPS hence, restricting the system’s performance. The separate process was created by using the built-in Python Multiprocessing library. Moreover, multi-processing does not cause instability in the Global Interpreter Lock as for example, the OS of the RPi4 can utilize another CPU core for the secondary process. However, one main drawback is that more RAM is used which fortunately is not a limitation for the prototype.
+Key points from the flowchart description:
+
+USD (Upper Stopping Distance) is the upper limit for the stopping distance, indicating that the preceding vehicle is considered too far.
+LSD (Lower Stopping Distance) is the lower limit for the stopping distance, signifying that the preceding vehicle is considered too close.
+"Distance = None" implies no vehicle is detected in the region of interest.
+SSD Algorithm Limitation:
+
+The SSD algorithm can detect traffic signs but cannot read them, potentially leading to misinterpretation of "slow driving" within the speed limit and triggering false "slow" alerts.
+Addressing Slow Driving Issue:
+
+To address the slow driving issue, a "normal" state is added, assuming that if the bus is driving slowly within the speed limit, it will not be overtaken.
+The "Normal" state becomes false when no vehicle is detected or is too far in front, and the algorithm checks for potential overtaking to trigger the "Slow" state.
+Differentiation in Braking Distance:
+
+The algorithm is designed to differentiate between whether the preceding vehicle is slowing down or if the bus is being overtaken based on the range of braking distances.
+GPS Module Integration:
+
+A separate process interfaces with the GPS module and sends data to the cloud because the GPS module updates data at 1 second intervals, while the SSD algorithm operates at around 4 FPS.
+Implementing both in a single loop would limit the FPS to 1, affecting system performance.
+The use of the Python Multiprocessing library creates a separate process, preventing the algorithm from waiting for GPS data and improving overall system performance.
+Multiprocessing Benefits:
+
+Multiprocessing does not cause instability in the Global Interpreter Lock, allowing the OS of the RPi4 to utilize another CPU core for the secondary process.
+One drawback is increased RAM usage, but this is not a limitation for the prototype.
+
+## Hardware implementation:
+
+To hold everything, a PLA prototype is designed and 3D printed. The following is the design from Fusion 360:
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/57dd955d-d740-4018-8f1b-5e5063e1c0e1)
+
+The sensors and other modules are connected based on the schematic shown above.
+
+## Software implementation on Raspberry Pi 4:
+
+The following packages first need to be installed for OpenCV to work on the Rpi4:
+sudo apt-get -y install libxvidcore-dev libx264-dev
+sudo apt-get -y install libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev
+sudo apt-get -y install qt4-dev-tools libatlas-base-dev
+sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+
+SSD MobileNet-V2 trained with Deep Drive 100K dataset was chosen for high FPS and reasonable accuracy.
+
+## Software implementation App: which shows GPS coordinate of the Public transport:
+
+The speed and GPS coordinates are successfully collected and the latter is 
+being updated in the Firebase server. Moreover, an android app was developped using the Kivy framework in python to 
+successfully display the current GPS location of public transports on the chosen bus route.
+
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/dea7edb4-6e2a-463d-8b1e-998321e72684)
+
+Synchronising via google Firebase API:
+
+![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/de306c68-82c5-4c40-98ce-72f586157ded)
+
+## Results and testing:
+
+
 
