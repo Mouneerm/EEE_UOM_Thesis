@@ -4,11 +4,11 @@ Computer Vision algorithm implemented in a Raspberry Pi to monitor the performan
 
 ## Introduction to the problem:
 
-Mauritius has experienced significant economic growth, but it has led to traffic congestion issues.Encouraging public transport use, especially buses, is a potential solution, but residents avoid buses due to the main following reasons:
+Mauritius has experienced significant economic growth, but it has led to traffic congestion issues. Encouraging public transport use, especially buses, is a potential solution, but residents avoid buses due to the main following reasons:
 
 1 . Slow driving in an attempt to maximise the number of potential passengers.
 
-2 . Safety concerns; accidents sometimes happen due to speeding
+2 . Safety concerns: accidents sometimes happen due to speeding.
 
 3 . Unpredictable waiting times.
 
@@ -17,7 +17,7 @@ The proposed solution involves an Artificial Intelligence powered camera system 
 
 ## System Architecture:
 
-The propose system uses a Raspberry Pi 4 along with sensors to record key bus traveling characteristics in realtime, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
+The proposed system uses a Raspberry Pi 4 along with sensors to record key bus traveling characteristics in real time, such as speed, GPS coordinates and distance between vehicles in front. If the distance between the bus and the vehicle immediately in front of it is below the braking  distance, the driver will be penalized for dangerous driving while if the distance between both vehicles is too far and the bus is driving slowly for a certain amount of time, the driver will be warned and penalized for slow driving.
 
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/a2effaf6-d5a6-4f96-8852-f0f88160429c)
@@ -34,7 +34,7 @@ interconnected:
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/04373084-a6b6-4068-8e0a-47929abc1534)
 
 
-The schematics are shown below and note that the red wires represent the power rail, the black wires represent ground and the blue wires are for communication or GPIO output. Unfortunately, there is not any options on USB connectivity for the RPi4 in Fritzing and the USB camera connection is not shown.
+The schematics are shown below and note that the red wires represent the power rail, the black wires represent ground, and the blue wires are for communication or GPIO output. Unfortunately, there is not any options on USB connectivity for the RPi4 in Fritzing and the USB camera connection is not shown.
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/e93df27b-8196-4bea-b331-dfdb0c0aff62)
 
@@ -73,7 +73,7 @@ One drawback is increased RAM usage, but this is not a limitation for the protot
 
 ## Hardware implementation:
 
-To hold everything, a PLA prototype is designed and 3D printed. The following is the design from Fusion 360:
+To hold everything, a PLA prototype is designed, and 3D printed. The following is the design from Fusion 360:
 
 ![image](https://github.com/Mouneerm/EEE_UOM_Thesis/assets/45911394/57dd955d-d740-4018-8f1b-5e5063e1c0e1)
 
@@ -89,10 +89,10 @@ sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 
 SSD MobileNet-V2 trained with Deep Drive 100K dataset was chosen for high FPS and reasonable accuracy.
 
-## Software implementation App: which shows GPS coordinate of the Public transport:
+## Software implementation App: which shows GPS coordinate of the Public Transport:
 
 The speed and GPS coordinates are successfully collected and the latter is 
-being updated in the Firebase server. Moreover, an android app was developped using the Kivy framework in python to 
+being updated in the Firebase server. Moreover, an android app was developed using the Kivy framework in python to 
 successfully display the current GPS location of public transports on the chosen bus route.
 
 
