@@ -12,7 +12,7 @@ Mauritius has experienced significant economic growth, but it has led to traffic
 
 3 . Unpredictable waiting times.
 
-The proposed solution involves an Artificial Intelligence powered camera system to assess bus speed and safety, coupled with a GPS system using the Internet of Things (IoT) to provide real-time bus location information for passengers.
+The proposed solution involves a Raspberry Pi (SBC) camera system powered by Artificial Intelligence (AI) to assess bus speed and safety. The system is equipped with a GPS and use the Internet of Things (IoT) to provide real-time bus location information for passengers.
 
 
 ## System Architecture:
